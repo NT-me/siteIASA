@@ -10,8 +10,6 @@ if(isset($_POST['username']) && isset($_POST['password']))
     $db = mysqli_connect($db_host, $db_username, $db_password,$db_name)
            or die('could not connect to database');
 
-    // on applique les deux fonctions mysqli_real_escape_string et htmlspecialchars
-    // pour éliminer toute attaque de type injection SQL et XSS
     $username = $_POST['username'];
     $password = $_POST['password'];
 
@@ -21,6 +19,8 @@ if(isset($_POST['username']) && isset($_POST['password']))
               nom_agent = '".$username."' and nom = '".$password."' ";
         $requete_lvl_acc = "SELECT niv_acces FROM agent where
               nom_de_code = '".$username."' ";
+        $requete_info = "SELECT prenom, nom, age, sexe, nom_pays FROM personne where
+              nom_agent = '".$username."' ";
 
         $exec_requete_login = mysqli_query($db,$requete_login);
         $reponse_login      = mysqli_fetch_array($exec_requete_login);
@@ -30,7 +30,15 @@ if(isset($_POST['username']) && isset($_POST['password']))
           $exec_requete_lvl_acc = mysqli_query($db,$requete_lvl_acc);
           $reponse_lvl_acc      = mysqli_fetch_array($exec_requete_lvl_acc);
 
+          $exec_requete_info = mysqli_query($db, $requete_info);
+          $reponse_info      = mysqli_fetch_array($exec_requete_info);
+
           $_SESSION['username'] = $username;
+          $_SESSION['prenom'] = $reponse_info['prenom'];
+          $_SESSION['nom'] = $reponse_info['nom'];
+          $_SESSION['age'] = $reponse_info['age'];
+          $_SESSION['sexe'] = $reponse_info['sexe'];
+          $_SESSION['pays'] = $reponse_info['nom_pays'];
           $_SESSION['lvl_acc'] = $reponse_lvl_acc['niv_acces'];
           header('Location: principale.php');
         }
