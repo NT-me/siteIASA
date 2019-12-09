@@ -1,3 +1,9 @@
+* {
+ font-size: 100%;
+ font-family: orator std;
+ letter-spacing: -1.5px;
+}
+
 #container{
     width:400px;
     margin:0 auto;
@@ -11,6 +17,14 @@ form {
     background: #fff;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
+
+form #logo{
+  width: 60%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto }
+}
+
 #container h1{
     width: 38%;
     margin: 0 auto;
@@ -29,7 +43,7 @@ input[type=text], input[type=password] {
 
 /* Set a style for all buttons */
 input[type=submit] {
-    background-color: #53af57;
+    background-color: #bd272c;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -39,6 +53,6 @@ input[type=submit] {
 }
 input[type=submit]:hover {
     background-color: white;
-    color: #53af57;
-    border: 1px solid #53af57;
+    color: black;
+    border: 1px solid #bd272c;
 }
