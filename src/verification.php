@@ -12,20 +12,27 @@ if(isset($_POST['username']) && isset($_POST['password']))
 
     // on applique les deux fonctions mysqli_real_escape_string et htmlspecialchars
     // pour éliminer toute attaque de type injection SQL et XSS
-    $username = mysqli_real_escape_string($db,htmlspecialchars($_POST['username']));
-    $password = mysqli_real_escape_string($db,htmlspecialchars($_POST['password']));
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
     if($username !== "" && $password !== "")
     {
-        $requete = "SELECT count(*) FROM personne where
+        $requete_login = "SELECT count(*) FROM personne where
               nom_agent = '".$username."' and nom = '".$password."' ";
-        $exec_requete = mysqli_query($db,$requete);
-        $reponse      = mysqli_fetch_array($exec_requete);
-        $count = $reponse['count(*)'];
+        $requete_lvl_acc = "SELECT niv_acces FROM agent where
+              nom_de_code = '".$username."' ";
+
+        $exec_requete_login = mysqli_query($db,$requete_login);
+        $reponse_login      = mysqli_fetch_array($exec_requete_login);
+        $count = $reponse_login['count(*)'];
         if($count!=0) // nom d'utilisateur et mot de passe correctes
         {
-           $_SESSION['username'] = $username;
-           header('Location: principale.php');
+          $exec_requete_lvl_acc = mysqli_query($db,$requete_lvl_acc);
+          $reponse_lvl_acc      = mysqli_fetch_array($exec_requete_lvl_acc);
+
+          $_SESSION['username'] = $username;
+          $_SESSION['lvl_acc'] = $reponse_lvl_acc['niv_acces'];
+          header('Location: principale.php');
         }
         else
         {

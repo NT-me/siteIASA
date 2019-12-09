@@ -56,3 +56,46 @@ input[type=submit]:hover {
     color: black;
     border: 1px solid #bd272c;
 }
+
+.high-bar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+.high-bar li a {
+  display: block;
+  color: white;
+  text-align: center;
+  margin: 1vh;
+  margin-right: 1.5vh;
+  padding: 1em;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+.high-bar li a:hover {
+  background-color: #111;
+}
+
+.high-bar img{
+  float: left;
+  margin: 1vh;
+  width: 50px;
+}
+
+.high-bar{
+  z-index: 100;
+	width: 100%;
+	position: fixed;
+  right: 0;
+  top: 0%;
+}
+
+.deco-button{
+  float: right;
+  border: 1px solid white;
+  border-radius: 10px;
+}
