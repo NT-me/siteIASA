@@ -80,7 +80,7 @@
             <tbody>
               <tr>
                 <th>Nom</th>
-                <td><<?php print "$nom" ?></td>
+                <td><?php print "$nom" ?></td>
               </tr>
                 <th>Prénom</th>
                 <td><?php print "$prenom" ?></td>
