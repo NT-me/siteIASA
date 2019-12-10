@@ -154,9 +154,6 @@ mysqli_close($db); // fermer la connexion
     }
     ?>
   </p>
-
-</div>
-
-
-  </body>
+  </div>
+</body>
 </html>

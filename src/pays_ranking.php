@@ -52,6 +52,43 @@
       </ul>
     </div>
 
+    <div class="requete-box">
+      <p class="container is-medium" style="float: left">
+        Rechercher les pays au niveau de danger
+      </p>
+
+      <div class="select" style="float: left">
+        <select name="comparaison">
+          <option value="<">Supérieur (<)</option>
+          <option value="<=">Supérieur ou égal (<=)</option>
+          <option value=">">Inferieur (>)</option>
+          <option value=">=">Inferieur ou égal (>=)</option>
+
+        </select>
+      </div>
+
+      <p class="container is-medium" style="float: left">
+        a
+      </p>
+
+        <div class="select" style="float: left" method="post">
+          <select name="valeur">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </div>
+        <button class="button is-light" style="float: left" type="submit" name="show_dowpdown_value" value="show">Go</button>
+      </div>
+<?php
+// here starts the php
+ if (isset($_POST['show_valeur'])) {
+
+    echo $_POST['valeur']; // this will print the value if downbox out
+ }
+?>
     <div class="container is medium" style="margin-bottom: 2%">
       <table class="table is-fullwidth is-bordered is-hoverable">
         <tbody>
@@ -78,9 +115,7 @@
             echo "<td>".$data['nom']."</td><td>".$data['niv_danger']."</td>" ;
             echo "</tr>";
           }
-
           mysqli_close($db); // fermer la connexion
-
           ?>
         </tbody>
       </table>
