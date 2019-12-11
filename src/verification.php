@@ -22,6 +22,9 @@ if(isset($_POST['username']) && isset($_POST['password']))
         $requete_info = "SELECT prenom, nom, age, sexe, nom_pays FROM personne where
               nom_agent = '".$username."' ";
 
+        $requete_ns = "SELECT nom_service FROM travail where
+              nom_de_code = '".$username."' ";
+
         $exec_requete_login = mysqli_query($db,$requete_login);
         $reponse_login      = mysqli_fetch_array($exec_requete_login);
         $count = $reponse_login['count(*)'];
@@ -33,6 +36,9 @@ if(isset($_POST['username']) && isset($_POST['password']))
           $exec_requete_info = mysqli_query($db, $requete_info);
           $reponse_info      = mysqli_fetch_array($exec_requete_info);
 
+          $exec_ns = mysqli_query($db, $requete_ns);
+          $reponse_ns      = mysqli_fetch_array($exec_ns);
+
           $_SESSION['username'] = $username;
           $_SESSION['prenom'] = $reponse_info['prenom'];
           $_SESSION['nom'] = $reponse_info['nom'];
@@ -40,6 +46,7 @@ if(isset($_POST['username']) && isset($_POST['password']))
           $_SESSION['sexe'] = $reponse_info['sexe'];
           $_SESSION['pays'] = $reponse_info['nom_pays'];
           $_SESSION['lvl_acc'] = $reponse_lvl_acc['niv_acces'];
+          $_SESSION['service'] = $reponse_ns['nom_service'];
           header('Location: principale.php');
         }
         else
