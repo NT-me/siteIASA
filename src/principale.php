@@ -2,6 +2,7 @@
 <!-- head -->
 <?php
 include('head.php');
+include('co_db.php');
  ?>
 
   <body>
@@ -97,7 +98,6 @@ include('head.php');
                   }
                   echo "$NS";
                 }
-
                 ?></td>
               </tr>
             </tbody>
@@ -106,14 +106,6 @@ include('head.php');
       </article>
 </div>
 <?php
-// connexion à la base de données
-$db_username = 'agent';
-$db_password = 'IDagnIASA_';
-$db_name     = 'iasa';
-$db_host     = 'localhost';
-$db = mysqli_connect($db_host, $db_username, $db_password,$db_name)
-       or die('could not connect to database');
-
 // Missions inactives
 $requete_count_missions_i = "SELECT nom_de_code, count(*) as nb_mission
 from participe, mission
@@ -123,7 +115,7 @@ and participe.nom_de_code like '".$username."'
 group by nom_de_code
 order by nb_mission desc;";
 
-$exec_requete_count_mission_i = mysqli_query($db,$requete_count_missions_i);
+$exec_requete_count_mission_i = mysqli_query($db, $requete_count_missions_i);
 $reponse_count_mission_i      = mysqli_fetch_array($exec_requete_count_mission_i);
 $nb_mission_i = $reponse_count_mission_i['nb_mission'];
 

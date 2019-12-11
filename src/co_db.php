@@ -4,7 +4,7 @@ $niv = $_SESSION['lvl_acc'];
 
 // Se connect à la db
 // connexion à la base de données
-switch (niv) {
+switch ($niv) {
   case 0:
     $db_username = 'agent';
     $db_password = 'IDagnIASA_';
