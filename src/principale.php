@@ -9,7 +9,7 @@ include('co_db.php');
     <?php include('bar_menu.php');  ?>
 
 
-    <div class="container is-medium">
+    <div class="content is-medium">
       <p class="title is-4">
         <?php
         $username = $_SESSION['username'];
@@ -134,7 +134,7 @@ $nb_mission_a = $reponse_count_mission_a['nb_mission_a'];
 
 mysqli_close($db); // fermer la connexion
  ?>
-<div id="mission-active" class="container is-medium">
+<div id="mission-active" class="content is-medium">
   <h1 class="title is-4">
     Missions :
   </h1>

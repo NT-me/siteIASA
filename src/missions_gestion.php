@@ -7,7 +7,6 @@ include('co_db.php');
 
   <body>
     <?php include('bar_menu.php');  ?>
-    <div class="container">
       <div class="content is-medium">
         <p>
           <?php
@@ -42,9 +41,7 @@ include('co_db.php');
            ?>
         </p>
       </div>
-    </div>
 
-    <div class="container">
       <div class="content is-medium">
         <?php
           $tmp_nom = "";
@@ -52,18 +49,21 @@ include('co_db.php');
           $pays_noms = "";
           $id_NS = $_SESSION['service'];
 
-          $requete_ma = "SELECT gere.nom_mission, nom_de_code, nom_pays
-          from gere, participe, localise
-          where gere.nom_mission = participe.nom_mission
-          and participe.nom_mission = localise.nom_mission
-          and gere.nom_service = ".$id_NS."
-          order by nom_mission";
+          $requete_ma = "SELECT gere.nom_mission, mission.etat_mission
+          from gere, mission
+          where gere.nom_service = ".$id_NS." AND mission.nom_mission = gere.nom_mission";
           $exec_ma = mysqli_query($db,$requete_ma);
 
           while($data = mysqli_fetch_array($exec_ma)){
+            $pays_noms = "";
             if($data['nom_mission'] != $tmp_nom){
-              echo "  <div class=\"container box\" style=\"margin-bottom : 2%\"><div class=\"content is-little\">";
-              echo "  <p>Nom mission : ".$data['nom_mission']." <br> localisation : ".$pays_noms."<br> </p>";
+              $requete_npm = "SELECT nom_pays FROM localise where nom_mission like '".$data['nom_mission']."'";
+              $exec_npm = mysqli_query($db,$requete_npm);
+              while($data_npm = mysqli_fetch_array($exec_npm)){
+                $pays_noms = $pays_noms.$data_npm["nom_pays"]." ";
+              }
+              echo "  <div class=\"box\" style=\"margin-bottom : 2%;\"><div class=\"is-little\" style=\"margin-bottom : 2%;\">";
+              echo "  <p>Nom mission : ".$data['nom_mission']." <br> localisation : ".$pays_noms."<br> Etat : ".$data['etat_mission']."<br></p>";
               echo "</div> ";
               $tmp_nom =  $data['nom_mission'];
 
@@ -81,8 +81,8 @@ include('co_db.php');
 
             echo "</div>";
           }
+          mysqli_close($db);
           ?>
       </div>
-    </div>
   </body>
 </html>

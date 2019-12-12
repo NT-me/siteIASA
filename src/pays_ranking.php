@@ -8,39 +8,39 @@ include('co_db.php');
     <?php
     include('bar_menu.php')
      ?>
-    <div class="requete-box">
-        <form method="post">
-          <p class="container is-medium" style="float: left">
-            Rechercher les pays au niveau de danger
-          </p>
-          <select name="comparaison_signe" style="float: left">
-            <option value=">">Supérieur</option>
-            <option value=">=">Supérieur ou égal</option>
-            <option value="<">Inferieur</option>
-            <option value="<=">Inferieur ou égal</option>
-          </select>
-          <form method="post style="float: left"">
-            <p class="container is-medium" style="float: left">
-              a
-            </p>
-            <select name="valeur_niv">
-              <option value="0">0</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select>
-            <input type="submit" name="show_valeur_niv" value="show"/>
-          </form>
-        </form>
-      </div>
 
-      <div class="container" style="float: left">
 
-      </div>
+      <div class="container">
+        <div class="requete-box">
+            <form method="post">
+              <p class="container is-medium" style="float: left">
+                Rechercher les pays au niveau de danger
+              </p>
+              <select name="comparaison_signe" style="float: left">
+                <option value=">">Supérieur</option>
+                <option value=">=">Supérieur ou égal</option>
+                <option value="<">Inferieur</option>
+                <option value="<=">Inferieur ou égal</option>
+                <option value="=">Egal</option>
+
+              </select>
+              <form method="post style="float: left"">
+                <p class="container is-medium" style="float: left">
+                  a
+                </p>
+                <select name="valeur_niv">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                </select>
+                <input type="submit" name="show_valeur_niv" value="show"/>
+              </form>
+            </form>
+          </div>
       </div>
       <?php
-      // here starts the php
        if (isset($_POST['show_valeur_niv'])) {
           $valeur_niv = $_POST['valeur_niv'];
           $comparaison_signe = $_POST['comparaison_signe'];

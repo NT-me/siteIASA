@@ -132,7 +132,7 @@ input[type=submit]:hover {
 
 .requete-box{
   margin-bottom: 2%;
-  margin-left: 15%;
+  margin-left: 2%;
   margin-right: 5%;
   border-radius: 10px;
   padding-bottom: 2%;
@@ -142,4 +142,66 @@ input[type=submit]:hover {
   padding-top: 6.5px;
   padding-right: 2%;
   padding-left: 2%;
+}
+
+/* The side navigation menu */
+.sidebar {
+ padding: 0;
+ margin: 0;
+ margin-top: -2%;
+ width: 200px;
+ background-color: #f1f1f1;
+ position: fixed;
+ height: 100%;
+ overflow: auto;
+}
+
+/* Sidebar links */
+.sidebar a {
+ display: block;
+ color: black;
+ padding: 16px;
+ text-decoration: none;
+}
+
+/* Active/current link */
+.sidebar a.active {
+ background-color: #4CAF50;
+ color: white;
+}
+
+/* Links on mouse-over */
+.sidebar a:hover:not(.active) {
+ background-color: #555;
+ color: white;
+}
+
+/* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+div.content {
+ margin-left: 200px;
+ padding: 1px 16px;
+}
+
+div.container {
+ margin-left: 200px;
+ padding: 1px 16px;
+}
+
+/* On screens that are less than 700px wide, make the sidebar into a topbar */
+@media screen and (max-width: 700px) {
+ .sidebar {
+   width: 100%;
+   height: auto;
+   position: relative;
+ }
+ .sidebar a {float: left;}
+ div.content {margin-left: 0;}
+}
+
+/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+@media screen and (max-width: 400px) {
+ .sidebar a {
+   text-align: center;
+   float: none;
+ }
 }
