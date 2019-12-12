@@ -97,6 +97,8 @@ include('co_db.php');
           echo "</tr>";
         }
         echo " </tbody> </table>";
+
+        mysqli_close($db);
         ?>
       </div>
   </body>

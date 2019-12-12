@@ -140,12 +140,18 @@ mysqli_close($db); // fermer la connexion
   </h1>
   <p>
     <?php
-    print "Mission inactive : $nb_mission_i <br>";
-    if (empty($nb_mission_a)){
+    if (empty($nb_mission_i)){
+      print "Mission terminée : 0";
+    }
+    else {
+      print "Missions terminée : $nb_mission_i";
+    }
+    echo "<br>";
+    if (empty($nb_mission_i)){
       print "Mission active : 0";
     }
     else {
-      print "Mission active : $nb_mission_a";
+      print "Missions actives : $nb_mission_a";
     }
     ?>
   </p>

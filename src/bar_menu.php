@@ -9,13 +9,13 @@
   <a href="mission.php">Missions</a>
   <a href="pays_ranking.php">Classement des pays</a>
   <?php
-  if ($niv >= 1){
+  if ($niv == 1){
     print "<a href=\"missions_gestion.php\" >Missions en gestion</a>" ;
     print "<a href=\"agent_gestion.php\" >Agents en gestion</a>" ;
-    if ($niv == 2){
-      print "<a href=\".php\" >Chefs des services</a>" ;
-      print "<a href=\".php\" >RH agence</a>" ;
-    }
+  }
+  if ($niv == 2){
+    print "<a href=\"chef_service.php\" >Chefs des services</a>" ;
+    print "<a href=\".php\" >RH agence</a>" ;
   }
   ?>
 </div>
