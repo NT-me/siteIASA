@@ -147,6 +147,10 @@ include('co_db.php');
           $NS = "Contre-espionnage";
           break;
       }
+
+      $_SESSION['Directeur_Name'] = $data['directeur'];
+      $_SESSION['Directeur_service'] = $valeur_nsmi;
+
       echo "Informations à propos du service $NS : <br>";
 
       echo "  <div class=\"box \" style=\"margin-bottom : 2%;\"><div style=\"margin-bottom : 2%;\">";
@@ -155,7 +159,8 @@ include('co_db.php');
       Nombre d'agent : ".$data_nami['nbre_agent']."<br></p>
       Moyenne des niveaux de confiance : ".$data_moyenne['moy_conf']."% <br></p>
       Nombre de missions actives : ".$data_nmami['nbre_mission_en_cours']."<br></p>
-      Nombre de missions terminées : ".$data_ntmi['nbre_mission_terminees']."<br></p>";
+      Nombre de missions terminées : ".$data_ntmi['nbre_mission_terminees']."<br></p>
+      <a href=\"info_directeur.php\" class=\"button is-medium\"><i class=\"far fa-eye\"></i> Plus d'information à propos de ".$data['directeur']."</a>";
 
       if(in_array($valeur_nsmi, $data_imcmi)){
         echo "<br><br><br>";

@@ -14,7 +14,7 @@
     print "<a href=\"agent_gestion.php\" >Agents en gestion</a>" ;
   }
   if ($niv == 2){
-    print "<a href=\"chef_service.php\" >Chefs des services</a>" ;
+    print "<a href=\"chef_service.php\" >Gestion des services</a>" ;
     print "<a href=\".php\" >RH agence</a>" ;
   }
   ?>
