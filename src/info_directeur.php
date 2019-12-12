@@ -12,7 +12,6 @@ include('co_db.php');
     $requete_info = "SELECT prenom, nom, age, sexe, nom_pays FROM personne where
           nom_agent = '".$nom_dir."' ";
 
-
     $requete_lvl_acc = "SELECT niv_acces FROM agent where
           nom_de_code = '".$nom_dir."' ";
     $exec_requete_lvl_acc = mysqli_query($db,$requete_lvl_acc);

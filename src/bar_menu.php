@@ -7,7 +7,7 @@
 <div class="sidebar">
   <a href="principale.php">Espace personnel</a>
   <a href="mission.php">Missions</a>
-  <a href="pays_ranking.php">Classement des pays</a>
+
   <?php
   if ($niv == 1){
     print "<a href=\"missions_gestion.php\" >Missions en gestion</a>" ;
@@ -15,7 +15,9 @@
   }
   if ($niv == 2){
     print "<a href=\"chef_service.php\" >Gestion des services</a>" ;
-    print "<a href=\".php\" >RH agence</a>" ;
+    print "<a href=\".php\" >Gestion du personnel</a>" ;
+    print "<a href=\".php\" >Gestion des missions</a>" ;
   }
   ?>
+  <a href="pays_ranking.php">Classement des pays</a>
 </div>
