@@ -15,8 +15,8 @@
   }
   if ($niv == 2){
     print "<a href=\"chef_service.php\" >Gestion des services</a>" ;
-    print "<a href=\".php\" >Gestion du personnel</a>" ;
-    print "<a href=\".php\" >Gestion des missions</a>" ;
+    print "<a href=\"general_personnel.php\" >Gestion du personnel</a>" ;
+    print "<a href=\"general_mission.php\" >Gestion des missions</a>" ;
   }
   ?>
   <a href="pays_ranking.php">Classement des pays</a>
