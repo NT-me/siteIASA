@@ -64,7 +64,7 @@ include('co_db.php');
   }
   ?>
 
-  <div class="container is-medium">
+  <div class="content is-medium">
     <?php
     if(isset($_POST['show_nom_service_more_info'])){
       $requete_nsmi =
@@ -112,6 +112,14 @@ include('co_db.php');
       $exec_imcmi = mysqli_query($db,$requete_imcmi);
       $data_imcmi = mysqli_fetch_array($exec_imcmi);
 
+      $requete_moyenne =
+      "SELECT avg(niv_confiance) as moy_conf
+      from travail, agent
+      where agent.nom_de_code = travail.nom_de_code
+      and travail.nom_service = ".$valeur_nsmi;;
+      $exec_moyenne = mysqli_query($db,$requete_moyenne);
+      $data_moyenne = mysqli_fetch_array($exec_moyenne);
+
       $NS = $valeur_nsmi;
       switch ($NS) {
         case '86883657':
@@ -141,10 +149,11 @@ include('co_db.php');
       }
       echo "Informations à propos du service $NS : <br>";
 
-      echo "  <div class=\"box\" style=\"margin-bottom : 2%;\"><div class=\"is-little\" style=\"nsmirgin-bottom : 2%;\">";
+      echo "  <div class=\"box \" style=\"margin-bottom : 2%;\"><div style=\"margin-bottom : 2%;\">";
       echo "  <p>Spécialité du service : ".$data['specialite']." <br>
       Nom du directeur : ".$data['directeur']."<br>
       Nombre d'agent : ".$data_nami['nbre_agent']."<br></p>
+      Moyenne des niveaux de confiance : ".$data_moyenne['moy_conf']."% <br></p>
       Nombre de missions actives : ".$data_nmami['nbre_mission_en_cours']."<br></p>
       Nombre de missions terminées : ".$data_ntmi['nbre_mission_terminees']."<br></p>";
 
