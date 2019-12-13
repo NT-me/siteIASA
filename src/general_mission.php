@@ -101,12 +101,18 @@ include('co_db.php');
         $requete_npm = "SELECT nom_pays FROM localise where nom_mission like '".$data['nom_mission']."'";
         $exec_npm = mysqli_query($db,$requete_npm);
         while($data_npm = mysqli_fetch_array($exec_npm)){
-          if (isset ($_POST['nom_pays'])) {
+          /*if (isset ($_POST['nom_pays'])) {
             if (strcmp($data_npm["nom_pays"], $c_nom_pays) == 1){
               $Pays_flag = 0;
             }
-          }
+          }*/
           $pays_noms = $pays_noms.$data_npm["nom_pays"]." ";
+        }
+
+        if (isset ($_POST['nom_pays'])) {
+          if(strpos($pays_noms, $_POST['nom_pays']) === false){
+            $Pays_flag = 0;
+          }
         }
 
         if ($Pays_flag == 1){
