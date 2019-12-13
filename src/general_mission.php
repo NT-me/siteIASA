@@ -24,7 +24,6 @@ include('co_db.php');
             <option value="fini">Fini</option>
 
           </select>
-          <form method="post style="float: left"">
             <p class="container is-medium" style="float: left">
               du service
             </p>
@@ -44,7 +43,6 @@ include('co_db.php');
             </p>
             <input style="float: left" type="text" placeholder="Entrer le nom d'un pays" name="nom_pays">
             <input type="submit" name="show_etat_service" value="show"/>
-          </form>
         </form>
       </div>
       <?php
@@ -60,7 +58,7 @@ include('co_db.php');
 
   <div class="content is-medium">
   <?php
-  include "code_to_nom_service.php";
+  include "code_to_nom.php";
     $tmp_nom = "";
     $tmp_pays_nom="";
     $pays_noms = "";

@@ -29,4 +29,19 @@ function ctn_service($service_dir){
 
   return $NS;
 }
+
+function ctp_agent($niv_acc){
+  switch ($niv_acc) {
+    case 2:
+      $res = "General";
+      break;
+    case 1:
+      $res = "Directeur";
+      break;
+    case 0:
+      $res = "Agent";
+      break;
+  }
+  return $res;
+}
 ?>
