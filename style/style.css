@@ -65,6 +65,7 @@ input[type=submit]:hover {
   list-style-type: none;
   margin: 0;
   padding: 0;
+  height: 70px;
   margin-bottom: 2%;
   overflow: hidden;
   background-color: #333;
@@ -83,6 +84,13 @@ input[type=submit]:hover {
 /* Change the link color to #111 (black) on hover */
 .high-bar li a:hover {
   background-color: #111;
+}
+
+.high-bar h1{
+  color: white;
+  margin-top: 7px;
+  font-size: 40px;
+  float: left;
 }
 
 .high-bar img{

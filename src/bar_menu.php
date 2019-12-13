@@ -1,6 +1,14 @@
 <div class="high-bar">
 <ul>
   <img src="Favicon.png">
+
+    <h1>
+      <?php
+      include "code_to_nom.php";
+      $ndc = $_SESSION['username'];
+      echo ctp_agent($niv).", ".$ndc;
+      ?>
+    </h1>
   <li ><a class="deco-button" href="principale.php?deconnexion=true"><i class="fas fa-power-off"></i> Déconnexion</a></li>
 </ul>
 </div>
