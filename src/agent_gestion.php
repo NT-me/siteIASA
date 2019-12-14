@@ -6,12 +6,13 @@ include('co_db.php');
  ?>
 
   <body>
-    <?php include('bar_menu.php');  ?>
+    <?php include('bar_menu.php');
 
+    $NS = $_SESSION['service'];
+    ?>
       <div class="content is-medium">
         <p>
           <?php
-          $NS = $_SESSION['service'];
           switch ($NS) {
             case '86883657':
               $NS = "Informatique";
