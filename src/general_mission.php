@@ -2,9 +2,108 @@
 include('head.php');
 include('co_db.php');
  ?>
+ <script>
+       /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
+       function openNav() {
+         document.getElementById("mySidenav").style.width = "250px";
+       }
 
+       /* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+       function closeNav() {
+         document.getElementById("mySidenav").style.width = "0";
+       }
+  </script>
   <body>
-    <?php include('bar_menu.php');  ?>
+    <?php include('bar_menu.php');
+    // Supprimer un agent
+    if(isset($_GET['del_m']))
+    {
+      $del_a = $_GET['del_m'];
+      $requete_del_mission = "DELETE FROM mission WHERE nom_mission ='".$del_a."'";
+      $exec_del_agent = mysqli_query($db,  $requete_del_mission);
+
+      $requete_del_mission2 = "DELETE FROM gere WHERE nom_mission ='".$del_a."'";
+      $exec_del_agent2 = mysqli_query($db,  $requete_del_mission2);
+
+      $requete_del_mission3 = "DELETE FROM localise WHERE nom_mission ='".$del_a."'";
+      $exec_del_agent2 = mysqli_query($db,  $requete_del_mission3);
+
+      if (mysqli_query($db, $requete_del_mission)) {
+          echo "<div class=\"content notification is-success\">
+                Mission supprimée avec succès
+              </div>";
+      } else {
+        echo "<div class=\"content notification is-danger\">
+              Une erreur est survenue : ".mysqli_error($db)."
+            </div>";
+      }
+    }
+    ?>
+
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <h3 style="margin-left:2%">
+        Ajout d'une mission<br><br>
+      </h3>
+      <form method="post">
+        <h4 style="margin-top:2%">
+          Nom de la mission
+        </h4>
+        <input name="add_nom_m" type="text" placeholder="Entrez un nom" required>
+
+        <h4 style="margin-top:2%">
+          Nom du pays
+        </h4>
+        <input name="add_nom_p_m" type="text" placeholder="Entrez un nom de pays" required>
+
+        <h4 style="margin-top:2%">
+          Nom du service
+        </h4>
+        <select name="add_nom_service_m" style="width: 100%">
+          <option value="86883657">Informatique</option>
+          <option value="44609807">Defense</option>
+          <option value="91345364">Elimination</option>
+          <option value="22195465">Enquete</option>
+          <option value="78334802">Enquete interne</option>
+          <option value="6350262">Action</option>
+          <option value="1738411">Assistance</option>
+          <option value="17410830">Contre-espionnage</option>
+        </select>
+
+        <input type="submit" name="show_add_form_m" value="show"/>
+    </form>
+    </div>
+
+    <<?php
+    if (isset($_POST['show_add_form_m'])){
+      $add_nom_m = $_POST['add_nom_m'];
+      $add_nom_p_m = $_POST['add_nom_p_m'];
+      $add_nom_service_m = ctn_service($_POST['add_nom_service_m']);
+      $add_id_service_m = $_POST['add_nom_service_m'];
+
+      $req_new_mission = "INSERT INTO mission VALUES
+      ('".$add_nom_m."', '".$add_nom_service_m."', 'en cours')";
+      mysqli_query($db, $req_new_mission);
+
+      $req_new_mission_L = "INSERT INTO localise VALUES
+      ('".$add_nom_p_m."', '".$add_nom_m."')";
+      mysqli_query($db, $req_new_mission_L);
+
+      $req_new_mission_G = "INSERT INTO gere VALUES
+      (".$add_id_service_m.", '".$add_nom_m."')";
+      if (mysqli_query($db, $req_new_mission_G)) {
+        echo "<div class=\"content notification is-success\">
+        Mission créer avec succès
+        </div>";
+      } else {
+        echo "<div class=\"content notification is-danger\">
+        Une erreur est survenue : ".mysqli_error($db)."
+        </div>";
+      }
+    }
+
+
+     ?>
 
   <div class="content is-medium">
     <h2>
@@ -58,7 +157,7 @@ include('co_db.php');
 
   <div class="content is-medium">
   <?php
-  include "code_to_nom.php";
+  echo "<button style=\"float: right\" class=\"button is-success is-light\" onclick=\"openNav()\"><i class=\"far fa-plus-square\"></i> &nbsp Ajouter une mission</button>";
     $tmp_nom = "";
     $tmp_pays_nom="";
     $pays_noms = "";
@@ -105,7 +204,7 @@ include('co_db.php');
           $pays_noms = $pays_noms.$data_npm["nom_pays"]." ";
         }
 
-        if (isset ($_POST['nom_pays'])) {
+        if (isset ($_POST['nom_pays']) and !empty($_POST['nom_pays'])) {
           if(strpos($pays_noms, $_POST['nom_pays']) === false){
             $Pays_flag = 0;
           }
@@ -124,6 +223,8 @@ include('co_db.php');
           Localisation : ".$pays_noms."<br>
           Etat : ".$data['etat_mission']."<br>
           Service : ".$service_noms."<br></p>";
+          echo "<td><a style=\"float:right\" class=\"button is-danger is-light\" href=\"general_mission.php?del_m=".$data['nom_mission']."\">
+          <i class=\"far fa-trash-alt\"></i> &nbsp Supprimer une mission</a>"."</td>";
           echo "</div> ";
           $tmp_nom =  $data['nom_mission'];
 
