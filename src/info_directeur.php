@@ -44,7 +44,7 @@ include('co_db.php');
           <table class="table is-fullwidth is-bordered">
             <tbody>
               <tr>
-                <th>Nom</th>
+                <th>Nom de code</th>
                 <td><?php print "$nom_dir" ?></td>
               </tr>
                 <th>Prénom</th>
