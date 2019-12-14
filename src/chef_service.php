@@ -44,6 +44,8 @@ include('co_db.php');
           <input type="submit" name="show_change_service" value="Changer"/>
       </form>
       <?php
+      $error_flagounet = 0;
+
       if (isset($_POST['show_change_service'])) {
         $change_service_id = $_POST['change_service_id'];
         $change_ndc = $_POST['change_ndc'];

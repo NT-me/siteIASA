@@ -23,14 +23,127 @@ function openPage(pageName, elmnt, color) {
   // Add the specific color to the button used to open the tab content
   elmnt.style.backgroundColor = color;
 }
-
-// Get the element with id="defaultOpen" and click on it
-document.getElementById("defaultOpen").click();
 </script>
+
+<script>
+      /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
+      function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+      }
+
+      /* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+      function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+      }
+ </script>
   <body>
     <?php
     include('bar_menu.php');
       ?>
+
+      <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <h3 style="margin-left:2%">
+          Ajout d'un agent<br><br>
+        </h3>
+        <form method="post">
+          <h4 style="margin-top:2%">
+            Nom
+          </h4>
+          <input name="add_nom" type="text" placeholder="Entrez un nom de code" required>
+
+          <h4 style="margin-top:2%">
+            Prénom
+          </h4>
+          <input name="add_prenom" type="text" placeholder="Entrez un nom de code" required>
+
+          <h4 style="margin-top:2%">
+            Age
+          </h4>
+          <input type="number" name="add_age" min="0" max="100" required>
+
+          <h4 style="margin-top:2%">
+            Sexe
+          </h4>
+          <select name="add_sexe" style="width: 100%">
+            <option value="male">Masuclin</option>
+            <option value="female">Féminin</option>
+          </select>
+
+          <h4 style="margin-top:2%">
+            Nom du pays
+          </h4>
+          <input name="add_nom_p" type="text" placeholder="Entrez un nom de pays" required>
+
+          <h4 style="margin-top:2%">
+            Nom de code
+          </h4>
+          <input name="add_ndc" type="text" placeholder="Entrez un nom de code" required>
+
+          <h4 style="margin-top:2%">
+            Nom du service
+          </h4>
+          <select name="add_nom_service" style="width: 100%">
+            <option value="86883657">Informatique</option>
+            <option value="44609807">Defense</option>
+            <option value="91345364">Elimination</option>
+            <option value="22195465">Enquete</option>
+            <option value="78334802">Enquete interne</option>
+            <option value="6350262">Action</option>
+            <option value="1738411">Assistance</option>
+            <option value="17410830">Contre-espionnage</option>
+          </select>
+
+          <h4 style="margin-top:2%">
+            Pourcentage de confiance
+          </h4 >
+          <input method="post" type="number" name="add_niv" min="0" max="100" required>
+
+          <h4 style="margin-top:2%">
+            Etat de service
+          </h4>
+          <textarea class="textarea" name="add_eds" placeholder="Entrez le nom de code" required></textarea>
+          <input type="submit" name="show_add_form" value="show"/>
+  </form>
+</div>
+
+  <?php
+  if (isset($_POST['show_add_form'])) {
+    $add_nom = $_POST['add_nom'];
+    $add_nom_service = $_POST['add_nom_service'];
+    $add_prenom = $_POST['add_prenom'];
+    $add_nom_p = $_POST['add_nom_p'];
+    $add_age = $_POST['add_age'];
+    $add_sexe = $_POST['add_sexe'];
+
+    $add_ndc = $_POST['add_ndc'];
+    $add_niv = $_POST['add_niv'];
+    $add_eds = $_POST['add_eds'];
+
+    $req_add_agent = "INSERT INTO agent VALUES
+    ('".$add_ndc."', 0, ".$add_niv.", '".$add_eds."')";
+    mysqli_query($db, $req_add_agent);
+
+    $req_add_pers = "INSERT INTO personne VALUES
+    ('".$add_nom."', '".$add_prenom."', ".$add_age.", '".$add_sexe."', '".$add_ndc."', '".$add_nom_p."')";
+    mysqli_query($db, $req_add_pers);
+
+    $req_add_travail = "INSERT INTO travail VALUES
+    ('".$add_ndc."', ".$add_nom_service.")";
+
+  }
+  if  (isset($_POST['show_add_form'])){
+    if (mysqli_query($db, $req_add_travail)) {
+      echo "<div class=\"content notification is-success\">
+      Agent créer avec succès
+      </div>";
+    } else {
+      echo "<div class=\"content notification is-danger\">
+      Une erreur est survenue : ".mysqli_error($db)."
+      </div>";
+    }
+  }
+  ?>
     <div class="content is-medium">
       <h2>
         Ensemble du personnel de l'IASA :
@@ -111,6 +224,7 @@ document.getElementById("defaultOpen").click();
     ?>
 
     <div class="is-medium" style="margin-bottom: 2%">
+    <button style="float: right" class="button is-success is-light" onclick="openNav()"><i class="far fa-plus-square"></i> &nbsp Ajouter un agent</button>
           <?php
 
           echo "<br><br><br>";
