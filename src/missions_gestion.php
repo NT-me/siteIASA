@@ -38,6 +38,34 @@ include('co_db.php');
       }
     }
 
+    // Supprimer un agent d'une mission
+    if(isset($_GET['change_etat']) and isset($_GET['change_m']))
+    {
+      $change_etat = $_GET['change_etat'];
+      $change_m = $_GET['change_m'];
+
+      if ($change_etat == "en cours"){
+        $switch_m_etat = "fini";
+      }
+      else {
+        $switch_m_etat = "en cours";
+      }
+       $requete_change_etat = "UPDATE `mission` SET `etat_mission` = '".$switch_m_etat."' WHERE `mission`.`nom_mission` = '".$change_m."'";
+
+      $exec_change_etat = mysqli_query($db,  $requete_change_etat);
+
+      if (mysqli_query($db, $requete_change_etat)) {
+          echo "<div class=\"content notification is-success\">
+                Etat modifié avec succès <br>
+              </div>";
+      } else {
+        echo "<div class=\"content notification is-danger\">
+              Une erreur est survenue : ".mysqli_error($db)."<br>
+              ".$requete_change_etat."
+            </div>";
+      }
+    }
+
     $NS = $_SESSION['service'];?>
     <div id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -215,11 +243,19 @@ include('co_db.php');
                 }
               }
               if ($Pays_flag == 1){
+                if ($data['etat_mission'] == "en cours"){
+                  $switch_text = '<i class="fas fa-toggle-off"></i>Terminer';
+                }
+                else {
+                  $switch_text = '<i class="fas fa-toggle-on"></i>Rouvrir';
+
+                }
                 echo "  <div class=\"box\" style=\"margin-bottom : 2%;\">
                 <div class=\"is-little\" style=\"margin-bottom : 2%;\">";
                 echo "  <p>Nom mission : ".$data['nom_mission']." <br>
                 localisation : ".$pays_noms."<br>
-                Etat : ".$data['etat_mission']."<br></p>";
+                Etat : ".$data['etat_mission']."
+                <a class=\"button is-little is-light\" href=\"missions_gestion.php?change_etat=".$data['etat_mission']."&change_m=".$data['nom_mission']."\"></i> &nbsp ".$switch_text."</a><br></p>";
                 echo "</div> ";
                 $tmp_nom =  $data['nom_mission'];
 
