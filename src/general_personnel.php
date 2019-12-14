@@ -39,6 +39,29 @@ function openPage(pageName, elmnt, color) {
   <body>
     <?php
     include('bar_menu.php');
+
+    // Supprimer un agent
+    if(isset($_GET['del_a']))
+    {
+      $del_a = $_GET['del_a'];
+      $requete_del_agent = "DELETE FROM personne WHERE nom_agent ='".$del_a."'";
+
+      $exec_del_agent = mysqli_query($db,  $requete_del_agent);
+
+      $requete_del_agent2 = "DELETE FROM agent WHERE nom_de_code ='".$del_a."'";
+
+      $exec_del_agent2 = mysqli_query($db,  $requete_del_agent2);
+
+      if (mysqli_query($db, $requete_del_agent)) {
+          echo "<div class=\"content notification is-success\">
+                Agent supprimé avec succès
+              </div>";
+      } else {
+        echo "<div class=\"content notification is-danger\">
+              Une erreur est survenue : ".mysqli_error($db)."
+            </div>";
+      }
+    }
       ?>
 
       <div id="mySidenav" class="sidenav">
@@ -223,10 +246,9 @@ function openPage(pageName, elmnt, color) {
     }
     ?>
 
-    <div class="is-medium" style="margin-bottom: 2%">
-    <button style="float: right" class="button is-success is-light" onclick="openNav()"><i class="far fa-plus-square"></i> &nbsp Ajouter un agent</button>
+    <div style="margin-bottom: 2%">
           <?php
-
+          echo "<button style=\"float: right\" class=\"button is-success is-light\" onclick=\"openNav()\"><i class=\"far fa-plus-square\"></i> &nbsp Ajouter un agent</button>";
           echo "<br><br><br>";
           if (isset($valeur_ndc)) {
             $requete_tout_agents = "SELECT DISTINCT nom, prenom, nom_agent, agent.niv_acces, nom_service, nom_pays
@@ -279,19 +301,24 @@ function openPage(pageName, elmnt, color) {
                       <th>Nom de code</th>
                       <th>Poste</th>
                       <th>Service</th>
-                      <th>Pays</th>
+                      <th style=\"width: 10%\">Pays</th>
                     </tr>";
 
           while($data = mysqli_fetch_array($exec_tout_agents))
           {
             echo "<tr>";
-            echo "<td>".$data['nom']."</td>
-            <td>".$data['prenom']."</td>
+            if ($data['niv_acces'] == 0){
+              echo "<td>".$data['nom']."<a style=\"float:right\" class=\"button is-danger is-light\" href=\"general_personnel.php?del_a=".$data['nom_agent']."\">
+              <i class=\"far fa-trash-alt\"></i> &nbsp Supprimer un agent</a>"."</td>";
+            }
+            else{
+              echo "<td>".$data['nom']."</td>";
+            }
+            echo "<td>".$data['prenom']."</td>
             <td>".$data['nom_agent']."</td>
             <td>".ctp_agent($data['niv_acces'])."</td>
             <td>".ctn_service($data['nom_service'])."</td>
-            <td>".$data['nom_pays']."</td>" ;
-            ;
+            <td style=\"width: 10%\">".$data['nom_pays']."</td>" ;
             echo "</tr>";
           }
           mysqli_close($db); // fermer la connexion
