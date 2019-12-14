@@ -30,7 +30,6 @@ document.getElementById("defaultOpen").click();
   <body>
     <?php
     include('bar_menu.php');
-    include ("code_to_nom.php");
       ?>
     <div class="content is-medium">
       <h2>

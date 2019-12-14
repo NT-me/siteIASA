@@ -4,10 +4,98 @@
 include('head.php');
 include('co_db.php');
  ?>
+ <script>
+       /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
+       function openNav() {
+         document.getElementById("mySidenav").style.width = "250px";
+       }
 
+       /* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+       function closeNav() {
+         document.getElementById("mySidenav").style.width = "0";
+       }
+  </script>
   <body>
     <?php include('bar_menu.php');  ?>
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <h3 style="margin-left:2%">
+        <?php echo "Changement de directeur" ?> <br><br>
+      </h3>
 
+      <form method="post">
+        <p class="container is-medium" style="float: left">
+          Nom du service
+        </p>
+        <select name="change_service_id" style="float: left">
+          <option value="86883657">Informatique</option>
+          <option value="44609807">Defense</option>
+          <option value="91345364">Elimination</option>
+          <option value="22195465">Enquete</option>
+          <option value="78334802">Enquete interne</option>
+          <option value="6350262">Action</option>
+          <option value="1738411">Assistance</option>
+          <option value="17410830">Contre-espionnage</option>
+        </select>
+          <p class="container is-medium" style="float: left">
+            Nom de code
+          </p>
+          <input style="float: left" type="text" placeholder="Entrer le nom de code" name="change_ndc">
+          <input type="submit" name="show_change_service" value="Changer"/>
+      </form>
+      <?php
+      if (isset($_POST['show_change_service'])) {
+        $change_service_id = $_POST['change_service_id'];
+        $change_ndc = $_POST['change_ndc'];
+
+        $req_test_existe = "SELECT count(nom_de_code) as nbre_ndc FROM agent WHERE nom_de_code =".$change_ndc;
+        $exec_test_existe = mysqli_query($db, $req_test_existe);
+        $data_test_existe = mysqli_fetch_array($exec_test_existe);
+
+        if ($data_test_existe['nbre_ndc'] > 0){
+          $req_change_ndd = "SELECT directeur FROM service WHERE code_service =".$change_service_id;
+
+          $exec_change_ndd = mysqli_query($db, $req_change_ndd);
+          $data_change_ndd = mysqli_fetch_array($exec_change_ndd);
+
+          $req_down_d = "UPDATE `agent` SET `niv_acces` = '0' WHERE `agent`.`nom_de_code` ='".$data_change_ndd['directeur']."'";
+          $exec_down_d = mysqli_query($db, $req_down_d);
+
+          $req_up_d = "UPDATE `agent` SET `niv_acces` = '1' WHERE `agent`.`nom_de_code` ='".$change_ndc."'";
+          $exec_up_d = mysqli_query($db, $req_up_d);
+
+          $req_up_d = "UPDATE `service` SET `directeur` = '".$change_ndc."' WHERE `service`.`code_service` =".$change_service_id;
+          $exec_up_d = mysqli_query($db, $req_up_d);
+        }
+        else {
+          $error_flagounet = 1;
+        }
+
+
+      }
+      ?>
+    </div>
+    <?php
+    if (isset($req_up_d)){
+      if (mysqli_query($db, $req_up_d)) {
+        echo "<div class=\"content notification is-success\">
+        Directeur changé avec succès
+        </div>";
+      } else {
+        echo "<div class=\"content notification is-danger\">
+        Une erreur est survenue : ".mysqli_error($db)."
+        </div>";
+        $req_up_d = "UPDATE `agent` SET `niv_acces` = '1' WHERE `agent`.`nom_de_code` ='".$data_change_ndd['directeur']."'";
+        $exec_up_d = mysqli_query($db, $req_up_d);
+      }
+    }
+
+    if($error_flagounet == 1){
+      echo "<div class=\"content notification is-danger\">
+      Le nom de code n'existe pas
+      </div>";
+    }
+    ?>
     <div class="content is-medium">
       <p>
         Voici l'ensemble des services composant l'IASA et leur directeurs respectifs :
@@ -15,6 +103,7 @@ include('co_db.php');
     </div>
 
     <div class="container is medium" style="margin-bottom: 2%">
+      <button style= "float:right" class= "button is-light" onclick= "openNav() "><i class="fas fa-exchange-alt"></i></i> &nbsp Changer le directeur d'un service</button>
       <table class="table is-fullwidth is-bordered is-hoverable">
         <tbody>
           <tr style="background-color: lightgrey">
