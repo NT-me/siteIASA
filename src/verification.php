@@ -3,7 +3,7 @@ session_start();
 if(isset($_POST['username']) && isset($_POST['password']))
 {
     // connexion à la base de données
-    $db_username = 'root';
+    $db_username = 'IASA';
     $db_password = '';
     $db_name     = 'iasa';
     $db_host     = 'localhost';
