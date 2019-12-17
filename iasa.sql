@@ -28,7 +28,8 @@ SET time_zone = "+00:00";
 -- Structure de la table `agent`
 --
 
-DROP TABLE IF EXISTS `agent`;
+drop table if exists localise, gere, participe, travail, personne, pays, mission, service, agent;
+
 CREATE TABLE IF NOT EXISTS `agent` (
   `nom_de_code` varchar(30) NOT NULL,
   `niv_acces` decimal(4,0) NOT NULL,
@@ -575,7 +576,7 @@ CREATE TABLE IF NOT EXISTS `agent_ranking` (
 -- Structure de la table `gere`
 --
 
-DROP TABLE IF EXISTS `gere`;
+
 CREATE TABLE IF NOT EXISTS `gere` (
   `nom_service` int(8) NOT NULL,
   `nom_mission` varchar(30) NOT NULL,
@@ -695,7 +696,7 @@ INSERT INTO `gere` (`nom_service`, `nom_mission`) VALUES
 -- Structure de la table `localise`
 --
 
-DROP TABLE IF EXISTS `localise`;
+
 CREATE TABLE IF NOT EXISTS `localise` (
   `nom_pays` varchar(50) NOT NULL,
   `nom_mission` varchar(30) NOT NULL,
@@ -1072,7 +1073,6 @@ INSERT INTO `localise` (`nom_pays`, `nom_mission`) VALUES
 -- Structure de la table `mission`
 --
 
-DROP TABLE IF EXISTS `mission`;
 CREATE TABLE IF NOT EXISTS `mission` (
   `nom_mission` varchar(30) NOT NULL,
   `type_mission` varchar(30) DEFAULT NULL,
@@ -1192,7 +1192,7 @@ INSERT INTO `mission` (`nom_mission`, `type_mission`, `etat_mission`) VALUES
 -- Structure de la table `participe`
 --
 
-DROP TABLE IF EXISTS `participe`;
+
 CREATE TABLE IF NOT EXISTS `participe` (
   `nom_de_code` varchar(30) NOT NULL,
   `nom_mission` varchar(30) NOT NULL,
@@ -1643,7 +1643,7 @@ INSERT INTO `participe` (`nom_de_code`, `nom_mission`) VALUES
 -- Structure de la table `pays`
 --
 
-DROP TABLE IF EXISTS `pays`;
+
 CREATE TABLE IF NOT EXISTS `pays` (
   `nom` varchar(50) NOT NULL,
   `niv_danger` decimal(4,0) DEFAULT NULL,
@@ -1938,7 +1938,7 @@ CREATE TABLE IF NOT EXISTS `pays_ranking` (
 -- Structure de la table `personne`
 --
 
-DROP TABLE IF EXISTS `personne`;
+
 CREATE TABLE IF NOT EXISTS `personne` (
   `nom` varchar(30) NOT NULL,
   `prenom` varchar(30) NOT NULL,
@@ -2463,7 +2463,7 @@ INSERT INTO `personne` (`nom`, `prenom`, `age`, `sexe`, `nom_agent`, `nom_pays`)
 -- Structure de la table `service`
 --
 
-DROP TABLE IF EXISTS `service`;
+
 CREATE TABLE IF NOT EXISTS `service` (
   `code_service` int(8) NOT NULL,
   `specialite` varchar(30) NOT NULL,
@@ -2492,7 +2492,7 @@ INSERT INTO `service` (`code_service`, `specialite`, `directeur`) VALUES
 -- Structure de la table `travail`
 --
 
-DROP TABLE IF EXISTS `travail`;
+
 CREATE TABLE IF NOT EXISTS `travail` (
   `nom_de_code` varchar(30) NOT NULL,
   `nom_service` int(8) NOT NULL,
@@ -3035,6 +3035,32 @@ DROP TABLE IF EXISTS `pays_ranking`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `pays_ranking`  AS  select `pays`.`nom` AS `nom`,`pays`.`niv_danger` AS `niv_danger` from `pays` order by `pays`.`niv_danger` desc ;
 COMMIT;
+
+
+create user 'general'@'localhost' identified by 'IDgenIASA_';
+GRANT ALL PRIVILEGES ON *.* TO 'general'@'localhost' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON `iasa`.`user` TO 'general'@'localhost' WITH GRANT OPTION;
+flush privileges;
+
+create user 'chief'@'localhost' identified by 'IDchfIASA_';
+  GRANT SELECT, UPDATE ON `iasa`.`agent` TO 'chief'@'localhost';
+  GRANT SELECT ON `iasa`.`pays_ranking` TO 'chief'@'localhost';
+  GRANT SELECT ON `iasa`.`agent_en_mission` TO 'chief'@'localhost';
+  GRANT SELECT ON `iasa`.`localise` TO 'chief'@'localhost';
+  GRANT SELECT ON `iasa`.`travail` TO 'chief'@'localhost';
+  GRANT SELECT ON `iasa`.`gere` TO 'chief'@'localhost';
+  GRANT SELECT, INSERT, UPDATE, DELETE ON `iasa`.`participe` TO 'chief'@'localhost';
+  GRANT SELECT, INSERT, UPDATE, DELETE ON `iasa`.`mission` TO 'chief'@'localhost';
+flush privileges;
+
+create user 'agent'@'localhost' identified by 'IDagnIASA_';
+  GRANT USAGE ON *.* TO 'agent'@'localhost';
+  GRANT SELECT ON `iasa`.`agent` TO 'agent'@'localhost';
+  GRANT SELECT ON `iasa`.`localise` TO 'agent'@'localhost';
+  GRANT SELECT ON `iasa`.`mission` TO 'agent'@'localhost';
+  GRANT SELECT ON `iasa`.`pays_ranking` TO 'agent'@'localhost';
+  GRANT SELECT ON `iasa`.`participe` TO 'agent'@'localhost';
+flush privileges;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
