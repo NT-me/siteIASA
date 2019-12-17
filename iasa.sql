@@ -3036,6 +3036,11 @@ DROP TABLE IF EXISTS `pays_ranking`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `pays_ranking`  AS  select `pays`.`nom` AS `nom`,`pays`.`niv_danger` AS `niv_danger` from `pays` order by `pays`.`niv_danger` desc ;
 COMMIT;
 
+create user 'IASA'@'localhost';
+grant select on iasa.agent to 'IASA'@'localhost';
+grant select on iasa.personne to 'IASA'@'localhost';
+grant select on iasa.travail to 'IASA'@'localhost';
+flush PRIVILEGES;
 
 create user 'general'@'localhost' identified by 'IDgenIASA_';
 GRANT ALL PRIVILEGES ON *.* TO 'general'@'localhost' WITH GRANT OPTION;
