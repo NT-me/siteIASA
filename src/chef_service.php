@@ -50,7 +50,7 @@ include('co_db.php');
         $change_service_id = $_POST['change_service_id'];
         $change_ndc = $_POST['change_ndc'];
 
-        $req_test_existe = "SELECT count(nom_de_code) as nbre_ndc FROM agent WHERE nom_de_code =".$change_ndc;
+        $req_test_existe = "SELECT count(nom_de_code) as nbre_ndc FROM agent WHERE nom_de_code like '".$change_ndc."'";
         $exec_test_existe = mysqli_query($db, $req_test_existe);
         $data_test_existe = mysqli_fetch_array($exec_test_existe);
 
@@ -72,8 +72,6 @@ include('co_db.php');
         else {
           $error_flagounet = 1;
         }
-
-
       }
       ?>
     </div>
