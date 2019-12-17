@@ -268,7 +268,9 @@ include('co_db.php');
                   echo "<th style=\"width: 10%\"><a class=\"button is-danger is-light\" href=\"missions_gestion.php?del_a=".$item['nom_de_code']."&del_m=".$data['nom_mission']."\"><i class=\"far fa-trash-alt\"></i> &nbsp Supprimer un agent</a></th>";
                   echo "</tr>";
                 }
-                echo " </tbody> </table>";
+                echo "</div></tbody> </table>";
+                echo "</div> ";
+                
               }
 
             }
