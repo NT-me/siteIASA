@@ -99,7 +99,7 @@ include('co_db.php');
 
             $requete_mds = "SELECT gere.nom_mission, mission.etat_mission
             from gere, mission
-            where gere.nom_service = ".$id_NS." AND mission.nom_mission = gere.nom_mission";
+            where gere.nom_service = ".$id_NS." AND mission.nom_mission = gere.nom_mission AND mission.etat_mission like 'en cours'";
 
             $exec_mds = mysqli_query($db, $requete_mds);
 
@@ -270,7 +270,7 @@ include('co_db.php');
                 }
                 echo "</div></tbody> </table>";
                 echo "</div> ";
-                
+
               }
 
             }
